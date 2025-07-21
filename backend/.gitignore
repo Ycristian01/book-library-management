@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Payara6 ###
+payara-micro-6.2025.7.jar
