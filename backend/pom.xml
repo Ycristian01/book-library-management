@@ -7,6 +7,7 @@
     <groupId>org.example</groupId>
     <artifactId>backend</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -45,4 +46,8 @@
             <version>42.7.2</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>backend</finalName>
+    </build>
 </project>
