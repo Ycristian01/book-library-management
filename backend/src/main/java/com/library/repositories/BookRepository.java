@@ -13,9 +13,11 @@ public class BookRepository {
   @PersistenceContext(unitName = "libraryPU")
   private EntityManager em;
 
-  public List<Book> findAll() {
-    List<Book> books = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
-    return books;
+  public List<Book> findAll(int page, int limit) {
+    return em.createQuery("SELECT b FROM Book b", Book.class)
+        .setFirstResult((page - 1) * limit)
+        .setMaxResults(limit)
+        .getResultList();
   }
 
   public Book find(Long id) {
