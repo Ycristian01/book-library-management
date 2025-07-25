@@ -1,5 +1,6 @@
 package com.library.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "books")
@@ -24,7 +27,12 @@ public class Book {
   @Min(value = 1, message = "Year must be a positive number")
   private int year;
 
-  // Constructors
+  @Column(unique = true)
+  @NotBlank(message = "ISBN is required")
+  @Size(min = 13, max = 13, message = "ISBN must be exactly 13 characters")
+  @Pattern(regexp = "\\d{13}", message = "ISBN must contain only 13 digits")
+  private String isbn;
+
   public Book() {
   }
 
@@ -67,13 +75,11 @@ public class Book {
     this.year = year;
   }
 
-  @Override
-  public String toString() {
-    return "Book{" +
-        "id=" + id +
-        ", title='" + title + '\'' +
-        ", author='" + author + '\'' +
-        ", year=" + year +
-        '}';
+  public String getIsbn() {
+    return isbn;
+  }
+
+  public void setIsbn(String isbn) {
+    this.isbn = isbn;
   }
 }
