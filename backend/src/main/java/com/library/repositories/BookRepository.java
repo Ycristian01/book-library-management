@@ -38,4 +38,9 @@ public class BookRepository {
       em.remove(book);
     }
   }
+
+  public long countAll() {
+    return em.createQuery("SELECT COUNT(b) FROM Book b", Long.class)
+        .getSingleResult();
+  }
 }

@@ -23,10 +23,11 @@ public class BookService {
     int currentLimit = (limit == null || limit < 1) ? 10 : limit;
 
     List<Book> books = repo.findAll(currentPage, currentLimit);
+    long total = repo.countAll();
 
     Map<String, Object> response = new HashMap<>();
     response.put("data", books);
-    response.put("total", books.size());
+    response.put("total", total);
     response.put("page", currentPage);
     response.put("limit", currentLimit);
 
