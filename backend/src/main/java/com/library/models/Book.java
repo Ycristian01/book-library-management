@@ -1,5 +1,7 @@
 package com.library.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,9 @@ public class Book {
   @Size(min = 13, max = 13, message = "ISBN must be exactly 13 characters")
   @Pattern(regexp = "\\d{13}", message = "ISBN must contain only 13 digits")
   private String isbn;
+
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
 
   public Book() {
   }
@@ -81,5 +86,13 @@ public class Book {
 
   public void setIsbn(String isbn) {
     this.isbn = isbn;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 }

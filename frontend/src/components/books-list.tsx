@@ -8,9 +8,20 @@ interface BooksListProps {
   loading: boolean;
   error: string | null;
   onRefresh: () => void;
+  onView: (book: BookI) => void;
+  onEdit: (book: BookI) => void;
+  onDelete: (book: BookI) => void;
 }
 
-export default function BooksList({ books, loading, error, onRefresh }: BooksListProps) {
+export default function BooksList({ 
+  books, 
+  loading, 
+  error, 
+  onRefresh, 
+  onView, 
+  onEdit, 
+  onDelete 
+}: BooksListProps) {
   if (loading) {
     return (
       <Paper elevation={3} sx={{ p: 6, textAlign: 'center' }}>
@@ -65,10 +76,13 @@ export default function BooksList({ books, loading, error, onRefresh }: BooksLis
     <Paper elevation={3} sx={{ overflow: 'hidden' }}>
       <List sx={{ py: 0 }}>
         {books.map((book, index) => (
-          <BookItem 
-            key={book.id} 
-            book={book} 
+          <BookItem
+            key={book.id}
+            book={book}
             isLast={index === books.length - 1}
+            onView={onView}
+            onEdit={onEdit}
+            onDelete={onDelete}
           />
         ))}
       </List>
