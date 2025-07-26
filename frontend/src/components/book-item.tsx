@@ -1,117 +1,107 @@
 import { 
   ListItem, 
-  ListItemIcon, 
   ListItemText, 
+  IconButton, 
   Box, 
   Typography, 
-  IconButton, 
+  Chip,
   Divider,
-  Chip
+  Tooltip
 } from '@mui/material';
-import { Book, Eye, Trash2 } from 'lucide-react';
+import { Eye, Edit, Trash2 } from 'lucide-react';
 import type BookI from '../interfaces/book.interface';
 
 interface BookItemProps {
   book: BookI;
-  isLast?: boolean;
+  isLast: boolean;
+  onView: (book: BookI) => void;
+  onEdit: (book: BookI) => void;
+  onDelete: (book: BookI) => void;
 }
 
-export default function BookItem({ book, isLast = false }: BookItemProps) {
-  const handleViewDetails = () => {
-    // TODO: Implement book detail
-    console.log('View details for book:', book.id);
-  };
-
-  const handleDelete = () => {
-    // TODO: Implement confirmation and delete
-    console.log('Delete book:', book.id);
-  };
-
+export default function BookItem({ book, isLast, onView, onEdit, onDelete }: BookItemProps) {
   return (
     <>
-      <ListItem
+      <ListItem 
         sx={{ 
-          py: 3,
+          py: 2.5, 
           px: 3,
           '&:hover': {
             bgcolor: 'grey.50'
-          },
-          transition: 'background-color 0.2s ease'
+          }
         }}
       >
-        <ListItemIcon sx={{ minWidth: 56 }}>
-          <Book size={40} color="#1976d2" />
-        </ListItemIcon>
-        
         <ListItemText
-          sx={{ flex: 1, mr: 2 }}
           primary={
-            <Typography variant="h6" component="h3" sx={{ fontWeight: 600, mb: 0.5 }}>
-              {book.title}
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+              <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', mb: 0.5 }}>
+                {book.title}
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 0.5, ml: 2 }}>
+                <Tooltip title="View Details">
+                  <IconButton 
+                    size="small" 
+                    onClick={() => onView(book)}
+                    sx={{ 
+                      color: 'primary.main',
+                      '&:hover': { bgcolor: 'primary.50' }
+                    }}
+                  >
+                    <Eye size={18} />
+                  </IconButton>
+                </Tooltip>
+                
+                <Tooltip title="Edit Book">
+                  <IconButton 
+                    size="small"
+                    onClick={() => onEdit(book)}
+                    sx={{ 
+                      color: 'warning.main',
+                      '&:hover': { bgcolor: 'warning.50' }
+                    }}
+                  >
+                    <Edit size={18} />
+                  </IconButton>
+                </Tooltip>
+                
+                <Tooltip title="Delete Book">
+                  <IconButton 
+                    size="small"
+                    onClick={() => onDelete(book)}
+                    sx={{ 
+                      color: 'error.main',
+                      '&:hover': { bgcolor: 'error.50' }
+                    }}
+                  >
+                    <Trash2 size={18} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </Box>
           }
           secondary={
-            <Box>
-              <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-                by <Box component="span" sx={{ fontWeight: 500, color: 'text.primary' }}>
-                  {book.author}
-                </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Typography variant="body2" color="text.secondary">
+                by {book.author}
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+              <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flexWrap: 'wrap' }}>
                 <Chip 
-                  label={`Year: ${book.year}`} 
+                  label={book.year} 
                   size="small" 
                   variant="outlined"
-                  sx={{ bgcolor: 'grey.50' }}
+                  sx={{ fontSize: '0.75rem' }}
                 />
                 <Chip 
                   label={`ISBN: ${book.isbn}`} 
                   size="small" 
                   variant="outlined"
-                  sx={{ bgcolor: 'grey.50', fontFamily: 'monospace', fontSize: '0.75rem' }}
+                  sx={{ fontSize: '0.75rem' }}
                 />
               </Box>
             </Box>
           }
         />
-        
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          <IconButton
-            onClick={handleViewDetails}
-            sx={{ 
-              color: 'text.secondary',
-              border: 1,
-              borderColor: 'grey.300',
-              '&:hover': {
-                color: 'primary.main',
-                borderColor: 'primary.main',
-                bgcolor: 'primary.50'
-              }
-            }}
-            title="View Details"
-          >
-            <Eye size={20} />
-          </IconButton>
-          
-          <IconButton
-            onClick={handleDelete}
-            sx={{ 
-              color: 'text.secondary',
-              border: 1,
-              borderColor: 'grey.300',
-              '&:hover': {
-                color: 'error.main',
-                borderColor: 'error.main',
-                bgcolor: 'error.50'
-              }
-            }}
-            title="Delete Book"
-          >
-            <Trash2 size={20} />
-          </IconButton>
-        </Box>
       </ListItem>
-      
       {!isLast && <Divider />}
     </>
   );

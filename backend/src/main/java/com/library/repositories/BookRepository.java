@@ -14,7 +14,7 @@ public class BookRepository {
   private EntityManager em;
 
   public List<Book> findAll(int page, int limit) {
-    return em.createQuery("SELECT b FROM Book b", Book.class)
+    return em.createQuery("SELECT b FROM Book b ORDER BY b.createdAt DESC", Book.class)
         .setFirstResult((page - 1) * limit)
         .setMaxResults(limit)
         .getResultList();
