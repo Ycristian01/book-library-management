@@ -59,6 +59,8 @@ public class BookService {
     }
 
     book.setId(id);
+    book.setCreatedAt(existing.getCreatedAt());
+
     Book updated = repo.update(book);
 
     Map<String, Object> response = new HashMap<>();
