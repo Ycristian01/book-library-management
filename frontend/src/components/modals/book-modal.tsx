@@ -139,7 +139,7 @@ export default function BookModal({ open, onClose, book, mode, onSave }: BookMod
       }}
     >
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 1 }}>
-        <Typography variant="h6" component="h2">
+        <Typography variant="h6" component="span">
           {getTitle()}
         </Typography>
         <IconButton 
