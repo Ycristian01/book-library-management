@@ -14,6 +14,7 @@ A full-stack web application for managing a library's book collection as part of
 ## 🏗️ Architecture
 
 ### Frontend
+
 - **React 18** with TypeScript
 - **Material-UI (MUI)** for UI components
 - **Axios** for HTTP requests
@@ -21,6 +22,7 @@ A full-stack web application for managing a library's book collection as part of
 - **Lucide React** for icons
 
 ### Backend
+
 - **Java 17** with Jakarta EE
 - **Payara Micro** application server
 - **JPA/Hibernate** for ORM
@@ -30,6 +32,7 @@ A full-stack web application for managing a library's book collection as part of
 - **Maven** for dependency management
 
 ### Infrastructure
+
 - **Docker & Docker Compose** for containerization
 - **PostgreSQL 16** database
 - **Environment-based configuration**
@@ -53,7 +56,7 @@ cd library-management-system
 
 ### 2. Download Payara Micro file
 
-I used the Payara Micro 6.2025.7 (JAR) version during all the development. Add the .jar file to the backend root directory and change the name to *payara-micro.jar* so the dockerfile can run the command properly.
+I used the Payara Micro 6.2025.7 (JAR) version during all the development. Add the .jar file to the backend root directory and change the name to _payara-micro.jar_ so the dockerfile can run the command properly.
 
 [payara.fish/downloads](https://www.payara.fish/downloads/payara-platform-community-edition/)
 
@@ -119,7 +122,7 @@ _*Disclaimer:* I strongly recommend to run the backend with the docker container
 
 ### Database Setup
 
-The PostgreSQL database will be automatically initialized when starting with Docker Compose. Also run the `initialize-books.sql` queries to create the books table and add some test data.
+The PostgreSQL database will be automatically initialized when starting with Docker Compose. Also it will automatically create the `books` table with some test data.
 
 ## 📁 Project Structure
 
@@ -155,13 +158,13 @@ book-library-management/
 
 ### Books API (`/backend/api/books`)
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/books` | Get all books (with pagination) |
-| GET | `/books/{id}` | Get book by ID |
-| POST | `/books` | Create new book |
-| PUT | `/books/{id}` | Update existing book |
-| DELETE | `/books/{id}` | Delete book |
+| Method | Endpoint      | Description                     |
+| ------ | ------------- | ------------------------------- |
+| GET    | `/books`      | Get all books (with pagination) |
+| GET    | `/books/{id}` | Get book by ID                  |
+| POST   | `/books`      | Create new book                 |
+| PUT    | `/books/{id}` | Update existing book            |
+| DELETE | `/books/{id}` | Delete book                     |
 
 ### Query Parameters
 
