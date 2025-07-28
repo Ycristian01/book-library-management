@@ -1,10 +1,10 @@
-import { 
-  Box, 
-  Typography, 
-  IconButton, 
-  Select, 
-  MenuItem, 
-  FormControl, 
+import {
+  Box,
+  Typography,
+  IconButton,
+  Select,
+  MenuItem,
+  FormControl,
   InputLabel,
   Paper,
   useMediaQuery,
@@ -20,16 +20,16 @@ interface PaginationProps {
   onLimitChange?: (limit: number) => void;
 }
 
-export default function Pagination({ 
-  currentPage, 
-  totalItems, 
-  itemsPerPage, 
+export default function Pagination({
+  currentPage,
+  totalItems,
+  itemsPerPage,
   onPageChange,
-  onLimitChange 
+  onLimitChange
 }: PaginationProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startItem = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
@@ -40,19 +40,43 @@ export default function Pagination({
     }
   };
 
-  const renderPageNumbers = () => {
-    const pages: number[] = [];
-    
+ const renderPageNumbers = () => {
+  const pages: (number | 'ellipsis')[] = [];
+  const maxVisible = 1;
+
+  if (totalPages <= maxVisible + 2) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
-    
     return pages;
-  };
-
-  if (totalItems === 0) {
-    return null;
   }
+
+  const left = Math.max(2, currentPage - Math.floor(maxVisible / 2));
+
+  const adjustedLeft = Math.max(2, Math.min(left, totalPages - maxVisible));
+  const adjustedRight = Math.min(totalPages - 1, adjustedLeft + maxVisible - 1);
+
+  pages.push(1);
+
+  if (adjustedLeft > 2) {
+    pages.push('ellipsis');
+  }
+
+  for (let i = adjustedLeft; i <= adjustedRight; i++) {
+    pages.push(i);
+  }
+
+  if (adjustedRight < totalPages - 1) {
+    pages.push('ellipsis');
+  }
+
+  pages.push(totalPages);
+
+  return pages;
+};
+
+
+  if (totalItems === 0) return null;
 
   if (isMobile) {
     return (
@@ -64,11 +88,11 @@ export default function Pagination({
         >
           <ChevronLeft size={20} />
         </IconButton>
-        
+
         <Typography variant="body2" color="text.secondary">
           Page {currentPage} of {totalPages}
         </Typography>
-        
+
         <IconButton
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
@@ -89,7 +113,7 @@ export default function Pagination({
             <Box component="span" sx={{ fontWeight: 'medium' }}>{endItem}</Box> of{' '}
             <Box component="span" sx={{ fontWeight: 'medium' }}>{totalItems}</Box> results
           </Typography>
-          
+
           {onLimitChange && (
             <FormControl size="small" sx={{ minWidth: 120 }}>
               <InputLabel>Items per page</InputLabel>
@@ -111,39 +135,43 @@ export default function Pagination({
           <IconButton
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage <= 1}
-            sx={{ 
-              border: 1, 
+            sx={{
+              border: 1,
               borderColor: 'grey.300',
               '&:disabled': { opacity: 0.5 }
             }}
           >
             <ChevronLeft size={20} />
           </IconButton>
-          
-          {renderPageNumbers().map((page) => (
-            <IconButton
-              key={page}
-              onClick={() => onPageChange(page)}
-              sx={{
-                border: 1,
-                borderColor: page === currentPage ? 'primary.main' : 'grey.300',
-                bgcolor: page === currentPage ? 'primary.main' : 'white',
-                color: page === currentPage ? 'white' : 'text.primary',
-                minWidth: 40,
-                '&:hover': {
-                  bgcolor: page === currentPage ? 'primary.dark' : 'grey.50'
-                }
-              }}
-            >
-              {page}
-            </IconButton>
-          ))}
-          
+
+          {renderPageNumbers().map((page, index) =>
+            page === 'ellipsis' ? (
+              <Typography key={`ellipsis-${index}`} sx={{ px: 1, color: 'text.secondary' }}>…</Typography>
+            ) : (
+              <IconButton
+                key={page}
+                onClick={() => onPageChange(page)}
+                sx={{
+                  border: 1,
+                  borderColor: page === currentPage ? 'primary.main' : 'grey.300',
+                  bgcolor: page === currentPage ? 'primary.main' : 'white',
+                  color: page === currentPage ? 'white' : 'text.primary',
+                  minWidth: 40,
+                  '&:hover': {
+                    bgcolor: page === currentPage ? 'primary.dark' : 'grey.50'
+                  }
+                }}
+              >
+                {page}
+              </IconButton>
+            )
+          )}
+
           <IconButton
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            sx={{ 
-              border: 1, 
+            sx={{
+              border: 1,
               borderColor: 'grey.300',
               '&:disabled': { opacity: 0.5 }
             }}
