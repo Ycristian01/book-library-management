@@ -1,9 +1,9 @@
-import { 
-  ListItem, 
-  ListItemText, 
-  IconButton, 
-  Box, 
-  Typography, 
+import {
+  ListItem,
+  ListItemText,
+  IconButton,
+  Box,
+  Typography,
   Chip,
   Divider,
   Tooltip
@@ -22,9 +22,9 @@ interface BookItemProps {
 export default function BookItem({ book, isLast, onView, onEdit, onDelete }: BookItemProps) {
   return (
     <>
-      <ListItem 
-        sx={{ 
-          py: 2.5, 
+      <ListItem
+        sx={{
+          py: 2.5,
           px: 3,
           '&:hover': {
             bgcolor: 'grey.50'
@@ -39,10 +39,10 @@ export default function BookItem({ book, isLast, onView, onEdit, onDelete }: Boo
               </Typography>
               <Box sx={{ display: 'flex', gap: 0.5, ml: 2 }}>
                 <Tooltip title="View Details">
-                  <IconButton 
-                    size="small" 
+                  <IconButton
+                    size="small"
                     onClick={() => onView(book)}
-                    sx={{ 
+                    sx={{
                       color: 'primary.main',
                       '&:hover': { bgcolor: 'primary.50' }
                     }}
@@ -50,12 +50,11 @@ export default function BookItem({ book, isLast, onView, onEdit, onDelete }: Boo
                     <Eye size={18} />
                   </IconButton>
                 </Tooltip>
-                
                 <Tooltip title="Edit Book">
-                  <IconButton 
+                  <IconButton
                     size="small"
                     onClick={() => onEdit(book)}
-                    sx={{ 
+                    sx={{
                       color: 'warning.main',
                       '&:hover': { bgcolor: 'warning.50' }
                     }}
@@ -63,12 +62,11 @@ export default function BookItem({ book, isLast, onView, onEdit, onDelete }: Boo
                     <Edit size={18} />
                   </IconButton>
                 </Tooltip>
-                
                 <Tooltip title="Delete Book">
-                  <IconButton 
+                  <IconButton
                     size="small"
                     onClick={() => onDelete(book)}
-                    sx={{ 
+                    sx={{
                       color: 'error.main',
                       '&:hover': { bgcolor: 'error.50' }
                     }}
@@ -81,25 +79,26 @@ export default function BookItem({ book, isLast, onView, onEdit, onDelete }: Boo
           }
           secondary={
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" component="span">
                 by {book.author}
               </Typography>
               <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flexWrap: 'wrap' }}>
-                <Chip 
-                  label={book.year} 
-                  size="small" 
+                <Chip
+                  label={book.year}
+                  size="small"
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
-                <Chip 
-                  label={`ISBN: ${book.isbn}`} 
-                  size="small" 
+                <Chip
+                  label={`ISBN: ${book.isbn}`}
+                  size="small"
                   variant="outlined"
                   sx={{ fontSize: '0.75rem' }}
                 />
               </Box>
             </Box>
           }
+          secondaryTypographyProps={{ component: 'div' }}
         />
       </ListItem>
       {!isLast && <Divider />}
