@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "killing current process"
-pkill -f "payara-micro-6.2025.7.jar"
+pkill -f "payara-micro.jar"
 
 echo "clean and build project..."
 mvn clean package
